@@ -1,39 +1,30 @@
-### Demo Test ###
-
+### 1. Methods for running project ###
+##### method 1: run executable #####
 ```console
-##### test.py uses sample-inputs directory, outputs to sample-outputs #####
-user:~$ python3 test.py
-```
-
-##### Methods for pulling project #####
-
-```console
-##### method 1: run program using ./normalizer executable (indirectly uses python3) #####
-user:~$ git clone https://github.com/howardtingting/truss-sampler.git
-user:~$ cd truss-sampler
 user:~/truss-sampler$ ./normalizer < sample.csv > out.csv
+```
+##### method 2: run normalizer.py #####
+```console
 user:~/truss-sampler$ python3 normalizer.py < sample.csv > out.csv
 ```
-
+##### method 3: test.py; inputs from sample-inputs, outputs to sample-outputs #####
 ```console
-##### method 2: run using python3 #####
-user:~$ git clone https://github.com/howardtingting/truss-sampler.git
-user:~$ cd truss-sampler
-user:~/truss-sampler$ ./normalizer < sample.csv > out.csv
-user:~/truss-sampler$ python3 normalizer.py < sample.csv > out.csv
+user:~/truss-sampler$ python3 test.py
 ```
 
+### 2. Methods for pulling project for usage ###
+##### method 1: run directly after pull #####
 ```console
-##### method 3: use docker-compose #####
-user:~$ git clone https://github.com/howardtingting/truss-sampler.git
-user:~$ cd truss-sampler
+user:~/truss-sampler$ ./normalizer < sample.csv > out.csv
+```
+##### method 2: use docker-compose #####
+```console
 user:~/truss-sampler$ docker-compose up -d --build
 user:~/truss-sampler$ docker run -it truss_normalizer bash
 root@xxxxx/app# ./normalizer < sample.csv > out.csv
 ```
-
+##### method 3: pull from docker hub #####
 ```console
-##### method 4: pull from docker hub #####
 user:~$ docker pull howardtingting/truss-sampler:init
 user:~$ docker run -it howardtingting/truss-sampler:init bash
 root@xxxxx/app# ./normalizer < sample.csv > out.csv
