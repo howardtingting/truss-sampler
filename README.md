@@ -26,8 +26,9 @@ user:~/truss-sampler$ python3 normalizer.py < sample.csv > out.csv
 ```console
 ##### method 3: use docker-compose #####
 user:~$ git clone https://github.com/howardtingting/truss-sampler.git
-user:~/Hashbabbler$ docker-compose up -d --build #builds container
-user:~$ docker run -it truss_normalizer bash
+user:~$ cd truss-sampler
+user:~/truss-sampler$ docker-compose up -d --build
+user:~/truss-sampler$ docker run -it truss_normalizer bash
 root@xxxxx/app# ./normalizer < sample.csv > out.csv
 ```
 
@@ -37,5 +38,3 @@ user:~$ docker pull howardtingting/truss-sampler:init
 user:~$ docker run -it howardtingting/truss-sampler:init bash
 root@xxxxx/app# ./normalizer < sample.csv > out.csv
 ```
-
-
