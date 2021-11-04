@@ -1,9 +1,10 @@
-#usage: python3 normalizer.py < input.csv > out.csv
-#test: python3 test.py
-    #test outputs to sample-outputs
 import os
 import sys
 import csv
+
+#usage: python3 normalizer.py < input.csv > out.csv
+#test: python3 test.py
+    #this test outputs to sample-outputs
 
 def rotate2DArray(arr):
     if not arr:
