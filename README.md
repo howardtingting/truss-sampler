@@ -25,7 +25,7 @@ root@xxxxx/app# ./normalizer < sample.csv > out.csv
 ```
 ##### method 3: pull from docker hub #####
 ```console
-user:~$ docker pull howardtingting/truss-sampler:init
-user:~$ docker run -it howardtingting/truss-sampler:init bash
+user:~$ docker pull howardtingting/truss-sampler:latest
+user:~$ docker run -it howardtingting/truss-sampler:latest bash
 root@xxxxx/app# ./normalizer < sample.csv > out.csv
 ```

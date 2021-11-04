@@ -49,6 +49,10 @@ def processTimestamp(timestamp):
     return timestamp
 
 def processZip(zip):
+    padLen = len(zip)
+    if padLen < 5:
+        zeroes = ''.join(['0' for _ in range(5-padLen)])
+        zip = zeroes + zip
     return zip
 
 def processFullName(fullName):

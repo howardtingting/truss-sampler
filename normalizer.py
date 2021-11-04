@@ -47,6 +47,10 @@ def processTimestamp(timestamp):
     return timestamp
 
 def processZip(zip):
+    padLen = len(zip)
+    if padLen < 5:
+        zeroes = ''.join(['0' for _ in range(5-padLen)])
+        zip = zeroes + zip
     return zip
 
 def processFullName(fullName):
@@ -69,28 +73,6 @@ def processArray(processFn, arr):
     for elem in arr:
         result.append(processFn(elem))
     return result
-
-def arrayToCsvString(csvArray):
-    csvResult = ''
-    for row in csvArray:
-        csvRow = ', '.join(row) + '\n'
-        csvResult += csvRow
-    return csvResult
-
-def normalizeCsv():
-    csvHeaders, csvRows = readCLI()
-    csvArray = [csvHeaders] + csvRows
-    rotatedCsvRows = rotate2DArray(csvRows)
-
-    for i in range(len(rotatedCsvRows)):
-        header = csvHeaders[i]
-        row = rotatedCsvRows[i]
-        if header == 'Timestamp':
-            row = processArray(processTimestamp, row)
-        elif header == '\"City\"':
-            row = processArray(processFullName, row)
-        rotatedCsvRows[i] = row
-    print(arrayToCsvString(rotatedCsvRows))
 
 def main():
     csvDictLi = readCLI()

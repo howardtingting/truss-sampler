@@ -9,4 +9,4 @@ os.system('python3 compile.py')
 mypath = './sample-inputs'
 inputs = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 for input in inputs:
-    os.system(f'./normalizer < sample-inputs/{input} > sample-outputs/{input}')
+    os.system(f'python3 normalizer.py < sample-inputs/{input} > sample-outputs/{input}')
