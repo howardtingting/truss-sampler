@@ -47,6 +47,10 @@ def processTimestamp(timestamp):
     date, hhmmss, ampm = timestamp.split(' ')
     month, day, year = date.split('/')
     year = '20' + year
+    if len(month) == 1:
+        month = '0' + month
+    if len(day) == 1:
+        day = '0' + day
     hh, mm, ss = hhmmss.split(':')
     if hh == '12' and mm == '00' and 'ss' == '00' and ampm == 'AM':
         hh = '00'
@@ -55,6 +59,8 @@ def processTimestamp(timestamp):
     hh = str(int(hh) + 3) #convert to eastern from PST
     if int(hh) >= 24:
         hh = str(int(hh) - 24)
+        if len(hh) == 1:
+            hh = '0' + hh
     timestamp = '-'.join([year, month, day]) + 'T' + ':'.join([hh, mm, ss]) + '-05:00'
     return timestamp
 
