@@ -77,7 +77,7 @@ def processFullName(fullName):
     return fullName.upper();
 
 def processAddress(address):
-    return address
+    return '"' + address + '"'
 
 def durationToSeconds(duration):
     hh,mm,ssms = map(lambda x: float(x), duration.split(':'))
