@@ -1,7 +1,7 @@
 import os
 import sys
 import csv
-
+import math
 #usage: python3 normalizer.py < input.csv > out.csv
 #test: python3 test.py
     #this test outputs to sample-outputs
@@ -44,6 +44,18 @@ def noProcess(value):
     return str(value)
 
 def processTimestamp(timestamp):
+    date, hhmmss, ampm = timestamp.split(' ')
+    month, day, year = date.split('/')
+    year = '20' + year
+    hh, mm, ss = hhmmss.split(':')
+    if hh == '12' and mm == '00' and 'ss' == '00' and ampm == 'AM':
+        hh = '00'
+    if ampm == 'PM' and hh != '12':
+        hh = str(int(hh) + 12)
+    hh = str(int(hh) + 3) #convert to eastern from PST
+    if int(hh) >= 24:
+        hh = str(int(hh) - 24)
+    timestamp = '-'.join([year, month, day]) + 'T' + ':'.join([hh, mm, ss]) + '-05:00'
     return timestamp
 
 def processZip(zip):
@@ -59,11 +71,16 @@ def processFullName(fullName):
 def processAddress(address):
     return address
 
+def durationToSeconds(duration):
+    hh,mm,ssms = map(lambda x: float(x), duration.split(':'))
+    totalSeconds = str(int((hh * 60 * 60) + (mm * 60) + math.floor(ssms)))
+    return totalSeconds
+
 def processFooDuration(duration):
-    return duration
+    return durationToSeconds(duration)
 
 def processBarDuration(duration):
-    return duration
+    return durationToSeconds(duration)
 
 def processTotalDuration(duration):
     return duration
@@ -84,24 +101,13 @@ def main():
     for header in headers:
         for row in range(numRows):
             columnDict[header].append(csvDictLi[row][header])
-    for header in columnDict:
-        column = columnDict[header]
-        if header == 'FullName':
-            columnDict[header] = processArray(processFullName, column)
-        elif header == 'Timestamp':
-            columnDict[header] = processArray(processTimestamp, column)
-        elif header == 'Address':
-            columnDict[header] = processArray(processAddress, column)
-        elif header == 'ZIP':
-            columnDict[header] = processArray(processZip, column)
-        elif header == 'FooDuration':
-            columnDict[header] = processArray(processFooDuration, column)
-        elif header == 'BarDuration':
-            columnDict[header] = processArray(processBarDuration, column)
-        elif header == 'TotalDuration':
-            columnDict[header] = processArray(processTimestamp, column)
-        else:
-            columnDict[header] = processArray(noProcess, column)
+    columnDict['FullName'] = processArray(processFullName, columnDict['FullName'])
+    columnDict['Timestamp'] = processArray(processTimestamp, columnDict['Timestamp'])
+    columnDict['Address'] = processArray(processAddress, columnDict['Address'])
+    columnDict['ZIP'] = processArray(processZip, columnDict['ZIP'])
+    columnDict['FooDuration'] = processArray(processFooDuration, columnDict['FooDuration'])
+    columnDict['BarDuration'] = processArray(processBarDuration, columnDict['BarDuration'])
+    columnDict['TotalDuration'] = [str(int((math.floor(float(x) + float(y))))) for (x,y) in zip(columnDict['FooDuration'], columnDict['BarDuration'])];
     collector = []
     for header in columnDict:
         collector.append([header] + columnDict[header])
