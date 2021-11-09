@@ -71,6 +71,9 @@ def processZip(zip):
         zip = zeroes + zip
     return zip
 
+def processNotes(notes):
+    return '"' + notes + '"'
+
 def processFullName(fullName):
     return fullName.upper();
 
@@ -114,6 +117,7 @@ def main():
     columnDict['FooDuration'] = processArray(processFooDuration, columnDict['FooDuration'])
     columnDict['BarDuration'] = processArray(processBarDuration, columnDict['BarDuration'])
     columnDict['TotalDuration'] = [str(int((math.floor(float(x) + float(y))))) for (x,y) in zip(columnDict['FooDuration'], columnDict['BarDuration'])];
+    columnDict['Notes'] = processArray(processNotes, columnDict['Notes'])
     collector = []
     for header in columnDict:
         collector.append([header] + columnDict[header])
